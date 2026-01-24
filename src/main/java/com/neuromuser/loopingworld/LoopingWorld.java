@@ -5,10 +5,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -43,7 +41,7 @@ public class LoopingWorld implements ModInitializer {
 		Long last = cooldowns.get(id);
 		if (last != null && tick - last < COOLDOWN_TICKS) return;
 
-		ServerWorld world = player.getServerWorld();
+		ServerWorld world = player.getWorld();
 		WorldBorder border = world.getWorldBorder();
 
 		double x = player.getX();
@@ -122,9 +120,8 @@ public class LoopingWorld implements ModInitializer {
 	}
 
 	private void play(ServerPlayerEntity player, SoundEvent sound, double x, double y, double z) {
-		RegistryEntry<SoundEvent> entry = Registries.SOUND_EVENT.getEntry(sound);
 		player.networkHandler.sendPacket(new PlaySoundS2CPacket(
-				entry,
+				sound,
 				SoundCategory.PLAYERS,
 				x, y, z,
 				1.0f,
