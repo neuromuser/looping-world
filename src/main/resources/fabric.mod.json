@@ -18,9 +18,7 @@
 			"com.neuromuser.loopingworld.LoopingWorld"
 		]
 	},
-	"mixins": [
-		"looping-world.mixins.json"
-	],
+	"mixins": [],
 	"depends": {
 		"fabricloader": ">=0.15.11",
 		"minecraft": "1.20.1",
